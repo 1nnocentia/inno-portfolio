@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)){
         html.classList.add('dark');
         icon.classList.replace('fa-moon', 'fa-sun');
-        document.querySelector('meta[name="theme-color').setAttribute('content','#000000');
+        document.querySelector('meta[name="theme-color"]').setAttribute('content','#000000');
     }
 
     //Toggle theme when button is clicked
@@ -31,8 +31,34 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
 
+    //Mobile navigation toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const closeMenu = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (menuToggle && closeMenu && mobileMenu){
+        menuToggle.addEventListener('click', function(){
+            mobileMenu.classList.remove('translate-x-full');
+            document.body.classList.add('overflow-hidden');
+        });
+
+        closeMenu.addEventListener('click', function(){
+            mobileMenu.classList.add('translate-x-full');
+            document.body.classList.remove('overflow-hidden');
+        });
+
+        //Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function(){
+                mobileMenu.classList.add('translate-x-full');
+                document.body.classList.remove('overflow-hidden');
+            });
+        });
+    }
+
     //Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
 
@@ -128,4 +154,49 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         });
     }, observerOptions);
-})
+
+    //Terminal Animation
+    const terminalContainer = document.getElementById('terminal-container');
+    const terminalContent = document.querySelector('.terminal-content');
+    const commandSpan = document.querySelector('.command-text');
+
+    if (terminalContainer && terminalContent && commandSpan){
+        const commandText = "git clone https://github.com/1nnocentia/reinmannsum.git";
+
+        let i = 0;
+        const typeCommand = () => {
+            if (i < commandText.length){
+                commandSpan.textContent += commandText.charAt(i);
+                i++;
+                setTimeout(typeCommand, 50);
+            } else {
+                //Add blinking cursor after typing
+                const cursor = document.createElement('span');
+                cursor.className = 'inline-block w-2 h-5 bg-gray-900 dark:bg-white ml-1 animate-blink align-middle';
+                terminalContent.appendChild(cursor);
+            }
+        };
+
+        //Start typing after delay
+        setTimeout(typeCommand, 1000);
+    } else {
+        //Fallback for original terminal structure
+        const terminal = document.querySelector('.terminal-body');
+        if (terminal) {
+            const commandText = terminal.querySelector('.command').textContent;
+            terminal.querySelector('.command').textContent = '';
+
+            if (i < commandText.length){
+                terminal.querySelector('.command').textContent += commandText.charAt(i);
+                i++;
+                setTimeout(typeCommand, 50);
+            } else {
+                //Blinking cursor after typing
+                terminal.querySelector('.command').insertAdjacentHTML('afterend', '<span class="animate-blink">_</span>');
+            }
+        }
+
+        //Start typing after delay
+        setTimeout(typeCommand, 1000);
+    }
+});
