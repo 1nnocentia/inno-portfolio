@@ -12,3 +12,6 @@ My IDE is Visual Studio Code and Tailwind is a utility-first CSS framework that 
 
 <p>In the contact form, JavaScript handles form submission without a backend (the database can be configured in future development stages.), logging the input, resetting the form, and temporarily changing the submit button’s text to confirm the action. Scroll-based animations are powered by a combination of event listeners and IntersectionObserver, which trigger fade-in and slide-up effects when sections enter the viewport. This includes subtle enhancements like adding a shadow to the header on scroll and animating the hero section’s terminal-style command using a typing effect.</p>
 As part of enhancing user interaction, this website integrates Tidio — a cloud-based live chat and chatbot service that allows visitors to communicate with the site owner in real time.
+
+## Reference
+<a href="https://www.youtube.com/watch?v=IMpYS8kDI4g">Youtube</a>
